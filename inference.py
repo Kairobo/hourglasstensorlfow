@@ -58,7 +58,7 @@ class Inference():
 		pltSkeleton : Plot skeleton on image
 		runVideoFilter : SURPRISE !!!
 	"""
-	def __init__(self, config_file = 'config.cfg', model = 'hg_refined_tiny_200', yoloModel = 'YOLO_small.ckpt'):
+	def __init__(self, config_file = 'config.cfg', model = 'hg_refined_tiny_200', yoloModel = 'YOLO_small.ckpt', disable_yolo = True):
 		""" Initilize the Predictor
 		Args:
 			config_file 	 	: *.cfg file with model's parameters
@@ -72,10 +72,18 @@ class Inference():
 		self.predict.LINKS_JOINTS()
 		self.predict.model_init()
 		self.predict.load_model(load = model)
-		self.predict.yolo_init()
-		self.predict.restore_yolo(load = yoloModel)
+		if disable_yolo:
+			pass
+		else:
+			self.predict.yolo_init()
+			self.predict.restore_yolo(load = yoloModel)
+
 		self.predict._create_prediction_tensor()
-		self.filter = VideoFilters()
+
+		if True:
+			pass
+		else:
+			self.filter = VideoFilters()
 		print('Done: ', time() - t, ' sec.')
 		
 	# -------------------------- WebCam Inference-------------------------------
